@@ -18,7 +18,8 @@ public class Tarefa {
 
     private String descricao;
 
-    private boolean concluida = false;
+    @Enumerated(EnumType.STRING)
+    private StatusTarefa status = StatusTarefa.PENDENTE;
 
     private LocalDate dataCriacao = LocalDate.now();
 
@@ -51,7 +52,7 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public boolean isConcluida() {
+    public boolean getConcluida() {
         return concluida;
     }
 
