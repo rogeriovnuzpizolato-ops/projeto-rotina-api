@@ -1,4 +1,7 @@
 package com.example.projetorotinaapi.model;
 
-public class StatusTarefa {
+public enum StatusTarefa {
+    PENDENTE,
+    CONCLUIDA,
+    VENCIDA
 }
