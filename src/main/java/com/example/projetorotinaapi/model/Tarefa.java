@@ -52,12 +52,12 @@ public class Tarefa {
         this.descricao = descricao;
     }
 
-    public boolean getConcluida() {
-        return concluida;
+    public StatusTarefa getStatus() {
+        return status;
     }
 
-    public void setConcluida(boolean concluida) {
-        this.concluida = concluida;
+    public void setStatus(StatusTarefa status) {
+        this.status = status;
     }
 
     public LocalDate getDataCriacao() {
