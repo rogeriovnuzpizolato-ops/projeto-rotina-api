@@ -2,11 +2,13 @@ package com.example.projetorotinaapi.controller;
 
 import com.example.projetorotinaapi.model.Tarefa;
 import com.example.projetorotinaapi.service.TarefaService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.List;
+
+@RestController
 @RequestMapping("/tarefas")
 public class TarefaController {
 
@@ -17,32 +19,30 @@ public class TarefaController {
     }
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("tarefas", tarefaService.listarTodas());
-        return "tarefas/lista";
+    public List<Tarefa> listar() {
+        return tarefaService.listarTodas();
     }
 
-    @GetMapping("/nova")
-    public String formularioNova(Model model) {
-        model.addAttribute("tarefa", new Tarefa());
-        return "tarefas/formulario";
+    @GetMapping("/{id}")
+    public Tarefa buscarPorId(@PathVariable Long id) {
+        return tarefaService.buscarPorId(id);
     }
 
     @PostMapping
-    public String salvar(@ModelAttribute Tarefa tarefa) {
-        tarefaService.salvar(tarefa);
-        return "redirect:/tarefas";
+    @ResponseStatus(HttpStatus.CREATED)
+    public Tarefa criar(@RequestBody Tarefa tarefa) {
+        return tarefaService.salvar(tarefa);
     }
 
-    @GetMapping("/editar/{id}")
-    public String formularioEditar(@PathVariable Long id, Model model) {
-        model.addAttribute("tarefa", tarefaService.buscarPorId(id));
-        return "tarefas/formulario";
+    @PutMapping("/{id}")
+    public Tarefa atualizar(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+        tarefa.setId(id);
+        return tarefaService.salvar(tarefa);
     }
 
-    @GetMapping("/deletar/{id}")
-    public String deletar(@PathVariable Long id) {
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletar(@PathVariable Long id) {
         tarefaService.deletar(id);
-        return "redirect:/tarefas";
     }
 }
