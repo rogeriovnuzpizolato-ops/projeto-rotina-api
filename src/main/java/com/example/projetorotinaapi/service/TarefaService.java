@@ -1,5 +1,6 @@
 package com.example.projetorotinaapi.service;
 
+import com.example.projetorotinaapi.exception.TarefaNaoEncontradaException;
 import com.example.projetorotinaapi.model.StatusTarefa;
 import com.example.projetorotinaapi.model.Tarefa;
 import com.example.projetorotinaapi.repository.TarefaRepository;
@@ -37,7 +38,7 @@ public class TarefaService {
 
     public Tarefa buscarPorId(Long id) {
         return tarefaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada com id: " + id));
+                .orElseThrow(() -> new TarefaNaoEncontradaException(id));
     }
 
     public Tarefa salvar(Tarefa tarefa) {
