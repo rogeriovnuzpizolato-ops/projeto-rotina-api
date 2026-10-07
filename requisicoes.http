@@ -1,0 +1,8 @@
+### Cadastrar usuário
+POST http://localhost:8080/auth/cadastro
+Content-Type: application/json
+
+{
+  "email": "rogerio@email.com",
+  "senha": "senha123"
+}
