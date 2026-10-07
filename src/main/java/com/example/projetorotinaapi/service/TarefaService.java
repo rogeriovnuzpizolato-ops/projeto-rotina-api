@@ -3,6 +3,7 @@ package com.example.projetorotinaapi.service;
 import com.example.projetorotinaapi.exception.TarefaNaoEncontradaException;
 import com.example.projetorotinaapi.model.StatusTarefa;
 import com.example.projetorotinaapi.model.Tarefa;
+import com.example.projetorotinaapi.model.Usuario;
 import com.example.projetorotinaapi.repository.TarefaRepository;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -47,5 +48,14 @@ public class TarefaService {
 
     public void deletar(Long id) {
         tarefaRepository.deleteById(id);
+    }
+
+    public List<Tarefa> listarTodas(Usuario usuario) {
+        return tarefaRepository.findByUsuario(usuario);
+    }
+
+    public Tarefa salvar(Tarefa tarefa, Usuario usuario) {
+        tarefa.setUsuario(usuario);
+        return tarefaRepository.save(tarefa);
     }
 }
