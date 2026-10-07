@@ -5,6 +5,8 @@ import com.example.projetorotinaapi.service.TarefaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import com.example.projetorotinaapi.model.Usuario;
 
 import java.util.List;
 
@@ -16,6 +18,17 @@ public class TarefaController {
 
     public TarefaController(TarefaService tarefaService) {
         this.tarefaService = tarefaService;
+    }
+
+    @GetMapping
+    public List<Tarefa> listar(@AuthenticationPrincipal Usuario usuario) {
+        return tarefaService.listarTodas(usuario);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Tarefa criar(@RequestBody Tarefa tarefa, @AuthenticationPrincipal Usuario usuario) {
+        return tarefaService.salvar(tarefa, usuario);
     }
 
     @GetMapping
