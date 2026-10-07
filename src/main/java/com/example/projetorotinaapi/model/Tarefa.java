@@ -21,6 +21,10 @@ public class Tarefa {
     @Enumerated(EnumType.STRING)
     private StatusTarefa status = StatusTarefa.PENDENTE;
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id", nullable = false)
+    private Usuario usuario;
+
     private LocalDate dataCriacao = LocalDate.now();
 
     // Construtor vazio (obrigatório para o JPA/Hibernate)
@@ -28,6 +32,14 @@ public class Tarefa {
     }
 
     // Getters e Setters
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
     public Long getId() {
         return id;
     }
