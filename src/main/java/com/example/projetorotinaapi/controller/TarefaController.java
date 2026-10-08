@@ -34,22 +34,20 @@ public class TarefaController {
     }
 
     @GetMapping("/{id}")
-    public Tarefa buscarPorId(@PathVariable Long id) {
-        return tarefaService.buscarPorId(id);
+    public Tarefa buscarPorId(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        return tarefaService.buscarPorId(id, usuario);
     }
 
     @PutMapping("/{id}")
-    public Tarefa atualizar(
-            @PathVariable Long id,
-            @RequestBody Tarefa tarefa) {
-
-        tarefa.setId(id);
-        return tarefaService.salvar(tarefa);
+    public Tarefa atualizar(@PathVariable Long id,
+                            @RequestBody Tarefa tarefa,
+                            @AuthenticationPrincipal Usuario usuario) {
+        return tarefaService.atualizar(id, tarefa, usuario);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletar(@PathVariable Long id) {
-        tarefaService.deletar(id);
+    public void deletar(@PathVariable Long id, @AuthenticationPrincipal Usuario usuario) {
+        tarefaService.deletar(id, usuario);
     }
 }

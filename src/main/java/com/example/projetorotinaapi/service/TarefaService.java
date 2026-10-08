@@ -37,17 +37,31 @@ public class TarefaService {
         return tarefaRepository.findAll();
     }
 
-    public Tarefa buscarPorId(Long id) {
-        return tarefaRepository.findById(id)
+    public Tarefa buscarPorId(Long id, Usuario usuario) {
+        Tarefa tarefa = tarefaRepository.findById(id)
                 .orElseThrow(() -> new TarefaNaoEncontradaException(id));
+
+        if (!tarefa.getUsuario().getId().equals(usuario.getId())) {
+            throw new TarefaNaoEncontradaException(id);
+        }
+        return tarefa;
+    }
+
+    public Tarefa atualizar(Long id, Tarefa dados, Usuario usuario) {
+        Tarefa existente = buscarPorId(id, usuario);
+        existente.setTitulo(dados.getTitulo());
+        existente.setDescricao(dados.getDescricao());
+        existente.setStatus(dados.getStatus());
+        return tarefaRepository.save(existente);
     }
 
     public Tarefa salvar(Tarefa tarefa) {
         return tarefaRepository.save(tarefa);
     }
 
-    public void deletar(Long id) {
-        tarefaRepository.deleteById(id);
+    public void deletar(Long id, Usuario usuario) {
+        Tarefa tarefa = buscarPorId(id, usuario);
+        tarefaRepository.delete(tarefa);
     }
 
     public List<Tarefa> listarTodas(Usuario usuario) {
