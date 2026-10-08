@@ -1,12 +1,11 @@
 package com.example.projetorotinaapi.controller;
 
 import com.example.projetorotinaapi.model.Tarefa;
+import com.example.projetorotinaapi.model.Usuario;
 import com.example.projetorotinaapi.service.TarefaService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import com.example.projetorotinaapi.model.Usuario;
 
 import java.util.List;
 
@@ -27,13 +26,11 @@ public class TarefaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Tarefa criar(@RequestBody Tarefa tarefa, @AuthenticationPrincipal Usuario usuario) {
-        return tarefaService.salvar(tarefa, usuario);
-    }
+    public Tarefa criar(
+            @RequestBody Tarefa tarefa,
+            @AuthenticationPrincipal Usuario usuario) {
 
-    @GetMapping
-    public List<Tarefa> listar() {
-        return tarefaService.listarTodas();
+        return tarefaService.salvar(tarefa, usuario);
     }
 
     @GetMapping("/{id}")
@@ -41,14 +38,11 @@ public class TarefaController {
         return tarefaService.buscarPorId(id);
     }
 
-    @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public Tarefa criar(@RequestBody Tarefa tarefa) {
-        return tarefaService.salvar(tarefa);
-    }
-
     @PutMapping("/{id}")
-    public Tarefa atualizar(@PathVariable Long id, @RequestBody Tarefa tarefa) {
+    public Tarefa atualizar(
+            @PathVariable Long id,
+            @RequestBody Tarefa tarefa) {
+
         tarefa.setId(id);
         return tarefaService.salvar(tarefa);
     }
