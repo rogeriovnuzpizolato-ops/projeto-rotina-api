@@ -3,6 +3,8 @@ package com.example.projetorotinaapi.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.time.LocalDate;
 
 @Entity
@@ -21,6 +23,7 @@ public class Tarefa {
     @Enumerated(EnumType.STRING)
     private StatusTarefa status = StatusTarefa.PENDENTE;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
